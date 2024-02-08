@@ -7,7 +7,7 @@ public class Main {
 
         DataBase dataBase =new DataBase();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             Reader reader = new Reader();
             ReaderAction readerAction = new ReaderAction(reader, dataBase);
             readerAction.start();

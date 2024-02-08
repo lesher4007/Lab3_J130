@@ -30,7 +30,7 @@ public class DataBase {
         if(this.writerConnection!=1){
             this.readerConnection++;
             res= true;
-            System.out.println("Читатель " +Thread.currentThread().getId()+" читает. Пользуется базой: "+ readerConnection+ " читателей.");
+            System.out.println("Читатель " +Thread.currentThread().getId()+" читает. Пользуется базой: "+ readerConnection+ " читателей, "+ writerConnection+" писателей.");
         }else {
             res= false;
         }
@@ -43,7 +43,7 @@ public class DataBase {
         if(this.readerConnection==0 && this.writerConnection==0){
             this.writerConnection++;
             res= true;
-            System.out.println("Писатель " +Thread.currentThread().getId()+" редактирует Базу данных. Пользуется базой: "+ readerConnection+ " читателей.");
+            System.out.println("Писатель " +Thread.currentThread().getId()+" редактирует Базу данных. Пользуется базой: "+ readerConnection+ " читателей, "+ writerConnection+" писателей.");
         }else {
             res= false;
         }

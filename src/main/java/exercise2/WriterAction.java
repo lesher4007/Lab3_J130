@@ -13,32 +13,39 @@ public class WriterAction extends Thread{
 
     @Override
     public void run() {
-        write();
-
-    }
-    private void writerSleep(long millis){
         try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            while (true) {
+        writerSleep(5000);
+        write();
+            }
+        }catch (InterruptedException e){
+
         }
 
     }
+    private void writerSleep(long millis) throws InterruptedException {
 
-    public void write(){
+            Thread.sleep(millis);
+
+
+    }
+
+    public void write() throws InterruptedException {
 
         int use = new Random().nextInt(10000,15000);
+        int use2 = new Random().nextInt(2000,10000);
+        writerSleep(use2);
 
-        System.out.println("Писатель " +Thread.currentThread().getId()+" хочет подключится к базе.");
+        System.out.println("Писатель " +Thread.currentThread().getId()+" хочет подключится к базе. Пользуется базой: "+ dataBase.getReaderConnection()+ " читателей, "+ dataBase.getWriterConnection()+" писателей.");
         while (!dataBase.write()){
-            System.out.println("Писатель " +Thread.currentThread().getId()+" ждет разрешение на подключение.");
+            System.out.println("Писатель " +Thread.currentThread().getId()+" ждет разрешение на подключение. Пользуется базой: "+ dataBase.getReaderConnection()+ " читателей, "+ dataBase.getWriterConnection()+" писателей.");
             writerSleep(4000);
         }
 
 
         writerSleep(use);
         dataBase.setWriterConnection(dataBase.getWriterConnection()-1);
-        System.out.println("Писатель " +Thread.currentThread().getId()+" выходит из базы.");
+        System.out.println("Писатель " +Thread.currentThread().getId()+" выходит из базы. Пользуется базой: "+ dataBase.getReaderConnection()+ " читателей, "+ dataBase.getWriterConnection()+" писателей.");
         Thread.currentThread().interrupt();
 
 
